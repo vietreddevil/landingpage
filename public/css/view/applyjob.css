@@ -1,0 +1,28 @@
+#sectionsNav {
+    background-color: rgba(69, 68, 68, 0.4) !important;
+}
+
+.title, .apply {
+    text-align: center;
+}
+.title h2{
+    font-weight: bold;
+}
+.title span {
+    font-family: lato;
+    color: #808080;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+}
+.form-info {
+    padding: 20px;
+    font-family: Lato;
+}
+.required-mark {
+    color: red;
+}
+label.row .col-sm-2 {
+    font-size: 16px;
+    color: #515357;
+}
