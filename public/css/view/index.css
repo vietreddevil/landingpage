@@ -1,28 +1,49 @@
 #sectionsNav {
-    background-color: rgba(69, 68, 68, 0.4) !important;
+    background-color: rgba(69, 68, 68, 1) !important;
+    padding-top: 0 !important;
 }
 
+/* "Roboto", "Helvetica", "Arial", sans-serif */
 select, select option {
     cursor: pointer;
 }
-
+.section {
+    padding-top: 40px !important;
+}
 .job-properties span {
     font-family: lato;
     color: #808080;
     text-transform: uppercase;
     font-weight: bold;
     margin-right: 20px;
+    font-size: 12px !important;
 }
 .job {
     position: relative;
     cursor: pointer;
 }
+.job .title, .job .title h4 {
+    margin-bottom: 0 !important;
+}
+
 .job:hover {
     background-color: rgba(25, 77, 65, 0.2);
 }
 .job button {
     position: absolute;
     right: 20px;
-    top: 0;
+    top: 3px;
     font-weight: bold;
+}
+nav.fixed-top {
+    padding-top: 0 !important;
+}
+nav.fixed-top a.navbar-brand {
+    font-size: 28px !important;
+}
+.main-raised {
+    box-shadow: none !important;
+}
+body {
+    background-color: white;
 }

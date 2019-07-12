@@ -7,6 +7,6 @@ function configView() {
     $('#main-content').css({'margin-top':'calc(' + topheight + 'px + 25px + 0.625rem)'})
 }
 
-function GotoJob() {
-    location.href = "/job";
+function GotoJob(id) {
+    location.href = "/checkjob/" + id;
 }

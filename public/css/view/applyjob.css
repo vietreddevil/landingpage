@@ -1,15 +1,18 @@
 #sectionsNav {
-    background-color: rgba(69, 68, 68, 0.4) !important;
+    background-color: rgba(69, 68, 68, 1) !important;
+    padding-top: 0 !important;
 }
+
 
 .title, .apply {
     text-align: center;
 }
 .title h2{
     font-weight: bold;
+    font-family: montserrat;
 }
 .title span {
-    font-family: lato;
+    font-family: montserrat;
     color: #808080;
     text-transform: uppercase;
     font-weight: bold;
@@ -17,12 +20,24 @@
 }
 .form-info {
     padding: 20px;
-    font-family: Lato;
+    font-family: montserrat;
 }
 .required-mark {
     color: red;
 }
+label.row {
+    margin-bottom: 30px;
+}
 label.row .col-sm-2 {
     font-size: 16px;
     color: #515357;
+}
+.main-raised {
+    box-shadow: none !important;
+}
+body {
+    background-color: white;
+}
+#file {
+    z-index: 20 !important;
 }

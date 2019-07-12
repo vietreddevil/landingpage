@@ -1,0 +1,41 @@
+#sectionsNav {
+    background-color: rgba(69, 68, 68, 1) !important;
+    padding-top: 0 !important;
+}
+
+select, select option {
+    cursor: pointer;
+}
+
+.job-properties span {
+    font-family: lato;
+    color: #808080;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+}
+.job {
+    position: relative;
+    cursor: pointer;
+}
+.job:hover {
+    background-color: rgba(25, 77, 65, 0.2);
+}
+.job button {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-weight: bold;
+}
+.modal-backdrop {
+    display: none;
+}
+.apply {
+    text-align: center;
+}
+.main-raised {
+    box-shadow: none !important;
+}
+body {
+    background-color: white;
+}
