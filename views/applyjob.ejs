@@ -24,7 +24,7 @@
     id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="https://www.facebook.com/inforetechnology">
+        <a style="font-size: 28px !important"  class="navbar-brand" href="https://www.facebook.com/inforetechnology">
           InfoRe Technology </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -55,6 +55,7 @@
         <!-- end job title -->
         <!-- main content -->
         <form id="uploadForm">
+          <input type="hidden" value="<%=job.name%>" name="jobname">
           <div class="form-info">
             <h4>
               SUBMIT YOUR APPLICATION
@@ -206,7 +207,7 @@
               <h4>
                 ADDITIONAL INFORMATION
               </h4>
-              <textarea class="form-control" placeholder="Add a cover letter or anything else you want to share."></textarea>
+              <textarea name="add_info" class="form-control" placeholder="Add a cover letter or anything else you want to share."></textarea>
             </div>
           </div>
           <div class="apply">
@@ -219,40 +220,29 @@
       </div>
     </div>
   </div>
-
+<!-- noti -->
+<div class="alert alert-success" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Success!</strong> You have been signed in successfully!
+  </div>
+<!-- end noti -->
   <footer class="footer" data-background-color="black">
     <div class="container">
       <nav class="float-left">
         <ul>
           <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
+            <a href="https://www.facebook.com/inforetechnology">
+              InfoRe
             </a>
           </li>
           <li>
-            <a href="https://creative-tim.com/presentation">
+            <a href="http://orm.vn/">
               About Us
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
             </a>
           </li>
         </ul>
       </nav>
-      <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-      </div>
+      <div class="copyright float-right"></div>
     </div>
   </footer>
   <!--   Core JS Files   -->

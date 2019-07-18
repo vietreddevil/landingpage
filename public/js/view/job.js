@@ -8,3 +8,8 @@ function configView() {
     var desc = $('.job-desc pre').text().trim();
     $('.job-desc pre').html(desc);
 }
+
+function submitsave() {
+    $('#JD').val($('.note-editable pre').html());
+    $('#formedit').submit();
+}

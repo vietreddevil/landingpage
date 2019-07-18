@@ -41,3 +41,10 @@ body {
 #file {
     z-index: 20 !important;
 }
+.alert {
+    position: fixed;
+    top: 0;
+    left: 10%;
+    opacity: 0;
+    z-index: 100;
+}

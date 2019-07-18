@@ -6,6 +6,11 @@ var session = require('express-session');
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+const db = "heads";
+const host = "localhost";
+const user = "root";
+const pwd = "";
+
 router.use(session({
   secret: 'secret',
   resave: true,
@@ -16,10 +21,10 @@ router.get('/adminLogin', (req, res)=> {
   res.clearCookie("job_id");
   if (req.session.loggedin) { 
     var connection = mysql.createConnection({
-      host: "localhost",
-      user: "root",
+      host: host,
+      user: user,
       password: "",
-      database: "heads"
+      database: db
     });
     connection.connect((err) => {
       if (err) console.log(err)
@@ -43,10 +48,10 @@ router.post('/checklogin', urlencodedParser, (req, res)=> {
 router.get('/', function(req, res) {
   res.clearCookie("job_id");
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
   connection.connect((err) => {
     if (err) console.log(err)
@@ -77,10 +82,10 @@ router.get('/editjob/:id', urlencodedParser, (req, res) => {
 router.get('/edit', (req, res)=> {
   if (req.session.loggedin) { 
     var connection = mysql.createConnection({
-      host: "localhost",
-      user: "root",
+      host: host,
+      user: user,
       password: "",
-      database: "heads"
+      database: db
     });
     connection.connect((err) => {
       if (err) console.log(err)
@@ -96,11 +101,12 @@ router.get('/edit', (req, res)=> {
 });
 router.post('/saveedit', urlencodedParser,(req, res)=> {
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
+  console.log(req.body.jd);
   connection.connect((err) => {
     if (err) console.log(err)
     connection.query("select name from landing_page_department_name where name = '" + req.body.team + "'", function (error, result) {
@@ -116,7 +122,7 @@ router.post('/saveedit', urlencodedParser,(req, res)=> {
   });
   connection.connect((err) => {
     if (err) console.log(err)
-    connection.query("update landing_page set city = '" + req.body.city + "', team = '" + req.body.team + "',name = '" + req.body.name + "',work_type = '" + req.body.work_type + "',description = '" + req.body.description.trim() + "'  WHERE id = '" + req.cookies["job_id"] + "'", function(err, result) {
+    connection.query("update landing_page set city = '" + req.body.city + "', team = '" + req.body.team + "',name = '" + req.body.name + "',work_type = '" + req.body.work_type + "',description = '" + req.body.jd + "'  WHERE id = '" + req.cookies["job_id"] + "'", function(err, result) {
       if(err) return res.redirect('/error');
       return res.redirect('/edit');
     });
@@ -124,10 +130,10 @@ router.post('/saveedit', urlencodedParser,(req, res)=> {
 });
 router.get('/deleteJob/:id/:team', urlencodedParser, (req, res)=> {
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
   connection.connect((err) => {
     if (err) console.log(err)
@@ -148,10 +154,10 @@ router.get('/deleteJob/:id/:team', urlencodedParser, (req, res)=> {
 /* job description */
 router.get('/job', (req, res) => {
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
   connection.connect((err) => {
     if (err) console.log(err)
@@ -166,16 +172,15 @@ router.get('/job', (req, res) => {
 /*  apply for job */
 router.get('/applyjob', urlencodedParser, (req, res) => {
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
   connection.connect((err) => {
     if (err) console.log(err)
     connection.query("SELECT * FROM landing_page WHERE id = '" + req.cookies["job_id"] + "'", function (error, result) {
       if(error) return res.redirect('/');
-      console.log(result[0]);
       res.render('applyjob', {job: result[0], type:'client'});
     });
   });
@@ -208,7 +213,55 @@ router.post('/apply/:email/:time', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      fs.writeFileSync(checkdir + '/info.json', JSON.stringify(fields));
+      var nodemailer = require('nodemailer');
+      var handlebars = require('handlebars');
+      var fs = require('fs');
+      var file_content = fs.readFileSync('./public/mail_template/candidate.html', 'utf8');
+      var template = handlebars.compile(file_content);
+      var replacements = {
+        department_name: fields.jobname,
+        name : fields.fullname,
+        mail :fields.email,
+        phone :fields.phone,
+        school :fields.school,
+        facebook :fields.facebook,
+        github :fields.github,
+        linkedin :fields.linkedin,
+        portfolio :fields.portfolio,
+        web :fields.otherweb,
+        info:fields.add_info
+      }
+      console.log(files.cv.path)
+      var mail_content = template(replacements);
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'vitcon241097@gmail.com',
+          pass: 'viets2a6'
+        }
+      });
+      var mailOptions = {
+        from: 'vitcon241097@gmail.com',
+        to: 'hr@yay.vn',
+        subject: 'CV',
+        html: mail_content,
+        attachments :[
+          {
+            path:files.cv.path
+          }
+        ]
+      }
+      console.log(mail_content);
+    
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          res.send("<h1 style='color:RED'>Error</h1>" + error + '<br>');
+          console.log(error);
+        } else {
+          res.send("<h1 style='color:green'>Email sent:</h1>" + info.response + '<br>');
+          console.log(info.response);
+        }
+      });
     }
   });
 });
@@ -226,10 +279,10 @@ router.post('/addjob', urlencodedParser, (req, res)=> {
   var work_type = req.body.work_type;
   var description = req.body.description;
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: host,
+    user: user,
     password: "",
-    database: "heads"
+    database: db
   });
   connection.connect((err) => {
     if (err) console.log(err)
@@ -253,6 +306,9 @@ router.post('/addjob', urlencodedParser, (req, res)=> {
   });
 });
 
+router.post('/sendapply', urlencodedParser, (req, res)=> {
+
+});
 /* error */
 router.get('/error', (req, res)=> {
   res.render('error');
